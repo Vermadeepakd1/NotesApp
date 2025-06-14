@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+.background {
+  background-image: url(/src/assets/layered-peaks-haikei.svg);
+  background-size: cover;
+}
