@@ -5,10 +5,12 @@ import Note from './Note'
 
 const NoteApp = () => {
     const [notes, setNotes] = useState([]);
+    const [note, setNote] = useState("");
 
     const AddHandler = (e) => {
-        e.target.preventDefault();
-        //when the button is clicked add the content to notes.
+        e.preventDefault();
+        setNotes([note, ...notes]);
+        setNote("");
     }
 
     return (
@@ -22,7 +24,7 @@ const NoteApp = () => {
                     )}
                 </div>
                 <div className='input-box  bg-cyan-100 w-fit'>
-                    <input type="text" name="note" id="note" placeholder='write your note here....' />
+                    <input value={note} onChange={(e) => setNote(e.target.value)} type="text" name="note" id="note" placeholder='write your note here....' />
                     <button onClick={AddHandler} className='bg-cyan-400 outline-none px-4 py-2 cursor-pointer'>+</button>
                 </div>
             </div >
