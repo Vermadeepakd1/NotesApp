@@ -14,9 +14,12 @@ const NoteApp = () => {
 
     const AddHandler = (e) => {
         e.preventDefault();
+        const time = new Date();
+        const notetime = time.toLocaleString();
         setNotes([{
             id: uuidv4(),
             note: note,
+            notetime: notetime,
         }, ...notes]);
         setNote("");
     }
@@ -28,7 +31,7 @@ const NoteApp = () => {
                 {/* render all notes here. */}
                 <div className='w-full h-auto flex flex-wrap gap-2 justify-center items-center overflow-auto'>
                     {notes.map((note) => (
-                        <Note key={uuidv4()} noteid={note.id} notestext={note.note} deletenote={handleDelete} />)
+                        <Note key={uuidv4()} noteid={note.id} notestext={note.note} deletenote={handleDelete} notetime={note.notetime} />)
                     )}
                 </div>
                 <div className='input-box  bg-cyan-100  w-3/4 mb-5 flex justify-between'>
