@@ -3,10 +3,23 @@ import { useState } from 'react'
 import Navbar from './Navbar'
 import Note from './Note'
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useRef } from 'react';
 
 const NoteApp = () => {
-    const [notes, setNotes] = useState([]);
+    const [notes, setNotes] = useState(() => (
+        JSON.parse(localStorage.getItem('notes'))
+    ));
     const [note, setNote] = useState("");
+
+
+    useEffect(() => {
+
+        localStorage.setItem('notes', JSON.stringify(notes));
+
+    }, [notes])
+
+
+
 
     const handleDelete = (id) => {
         setNotes(prevNotes => prevNotes.filter(note => note.id !== id));
@@ -31,7 +44,7 @@ const NoteApp = () => {
                 {/* render all notes here. */}
                 <div className='w-full h-auto flex flex-wrap gap-2 justify-center items-center overflow-auto'>
                     {notes.map((note) => (
-                        <Note key={uuidv4()} noteid={note.id} notestext={note.note} deletenote={handleDelete} notetime={note.notetime} />)
+                        <Note key={note.id} noteid={note.id} notestext={note.note} deletenote={handleDelete} notetime={note.notetime} />)
                     )}
                 </div>
                 <div className='input-box  bg-cyan-100  w-3/4 mb-5 flex justify-between'>

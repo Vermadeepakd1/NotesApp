@@ -9,7 +9,7 @@ const Note = ({ noteid, notestext, deletenote, notetime }) => {
                 </div>
                 <button onClick={() => deletenote(noteid)} className='bg-cyan-400 outline-none px-4 py-2 cursor-pointer ml-2'>X</button>
             </div>
-            <div className='bg-amber-200 self-end rounded-2xl px-3 mr-0.5'>
+            <div className='bg-amber-200 self-end rounded-lg px-3 mr-0.5'>
                 <p>created on: {notetime}</p>
             </div>
         </div>
