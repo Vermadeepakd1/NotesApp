@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import Navbar from './Navbar'
 import Note from './Note'
+import NoteInput from './NoteInput'
 import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 
@@ -11,6 +12,7 @@ const NoteApp = () => {
     ));
     const [note, setNote] = useState("");
     const [newAdded, setNewAdded] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
 
 
     useEffect(() => {
@@ -46,7 +48,7 @@ const NoteApp = () => {
     return (
         <>
             <div className='app-container  flex flex-col items-center justify-between h-dvh background'>
-                <Navbar />
+                <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
                 {/* render all notes here. */}
 
 
@@ -60,16 +62,13 @@ const NoteApp = () => {
 
                     }
 
-                    {notes.map((note) => (
+                    {notes.filter((note) => note.note.toLowerCase().includes(searchQuery.toLowerCase())).map((note) => (
                         <Note key={note.id} noteid={note.id} notestext={note.note} deletenote={handleDelete} notetime={note.notetime} />)
                     )}
                 </div>
                 {newAdded && <div className='absolute bottom-20 bg-green-500 text-white px-3 rounded-lg font-bold transition-all duration-100 ease-in-out z-10'>New note added</div>}
-                <div className='input-box  bg-cyan-100  w-3/4 mb-5 flex justify-between'>
-                    <input value={note} onChange={(e) => setNote(e.target.value)} type="text" name="note" id="note" placeholder='write your note here....' className='flex-1 px-2 outline-none bg-none min-w-0' autoFocus />
-                    <button onClick={AddHandler} className='bg-cyan-400 outline-none px-4 py-2 cursor-pointer shrink-0'>+</button>
+                <NoteInput note={note} setNote={setNote} AddHandler={AddHandler} />
 
-                </div>
             </div >
 
         </>
