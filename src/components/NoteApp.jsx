@@ -13,6 +13,7 @@ const NoteApp = () => {
     const [note, setNote] = useState("");
     const [newAdded, setNewAdded] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [editNoteId, setEditNoteId] = useState("");
 
 
     useEffect(() => {
@@ -45,6 +46,15 @@ const NoteApp = () => {
         }, 800);
     }
 
+    const saveHandler = (id, newText) => {
+        setNotes((prevNotes) =>
+            prevNotes.map(note =>
+                note.id === id ? { ...note, note: newText } : note
+            )
+        );
+        setEditNoteId("");
+    }
+
     return (
         <>
             <div className='app-container  flex flex-col items-center justify-between h-dvh background'>
@@ -63,7 +73,16 @@ const NoteApp = () => {
                     }
 
                     {notes.filter((note) => note.note.toLowerCase().includes(searchQuery.toLowerCase())).map((note) => (
-                        <Note key={note.id} noteid={note.id} notestext={note.note} deletenote={handleDelete} notetime={note.notetime} />)
+                        <Note
+                            key={note.id}
+                            noteid={note.id}
+                            notestext={note.note}
+                            deletenote={handleDelete}
+                            notetime={note.notetime}
+                            editNoteId={editNoteId}
+                            setEditNoteId={setEditNoteId}
+                            saveHandler={saveHandler}
+                        />)
                     )}
                 </div>
                 {newAdded && <div className='absolute bottom-20 bg-green-500 text-white px-3 rounded-lg font-bold transition-all duration-100 ease-in-out z-10'>New note added</div>}
