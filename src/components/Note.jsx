@@ -4,6 +4,7 @@ import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { MdSave } from "react-icons/md";
 
+
 const Note = ({ noteid, notestext, deletenote, notetime, editNoteId, setEditNoteId, saveHandler }) => {
     const [editedText, setEditedText] = useState(notestext);
     const [saved, setSaved] = useState(false);
