@@ -5,7 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { MdSave } from "react-icons/md";
 
 
-const Note = ({ noteid, notestext, deletenote, notetime, editNoteId, setEditNoteId, saveHandler }) => {
+const Note = ({ noteid, notestext, deletenote, notetime, editNoteId, setEditNoteId, saveHandler, searchQuery }) => {
     const [editedText, setEditedText] = useState(notestext);
     const [saved, setSaved] = useState(false);
     const inputRef = useRef(null)
@@ -35,6 +35,20 @@ const Note = ({ noteid, notestext, deletenote, notetime, editNoteId, setEditNote
         }, 800);
     }
 
+    const getHighlightedText = (text, highlight) => {
+        if (!highlight) return text;
+        const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+        return parts.map((part, i) =>
+            part.toLowerCase() === highlight.toLowerCase() ? (
+                <mark key={i} className="bg-yellow-200">{part}</mark>
+            ) : (
+                part
+            )
+        );
+    };
+
+
+
     return (
         <div id={noteid} className={`h-auto text-center my-1 flex flex-col mx-5 w-full md:w-1/2 lg:w-1/3 min-w-0 ${editNoteId === noteid ? 'bg-amber-300' : 'bg-amber-400'} transition-all duration-500 transform scale-105 hover:scale-100
 `}   >
@@ -45,7 +59,7 @@ const Note = ({ noteid, notestext, deletenote, notetime, editNoteId, setEditNote
                     {editNoteId === noteid ? (
                         <input ref={inputRef} value={editedText} onChange={(e) => (setEditedText(e.target.value))} type="text" name="editnote" id="editnote" className='outline-none bg-amber-200 transition-all duration-300 border-b-2 border-amber-500
 ' />
-                    ) : (<p>{notestext}</p>)}
+                    ) : (<p>{getHighlightedText(notestext, searchQuery)}</p>)}
 
                 </div>
 

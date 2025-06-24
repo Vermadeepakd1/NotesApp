@@ -31,6 +31,11 @@ const NoteApp = () => {
     const AddHandler = (e) => {
         e.preventDefault();
         if (!note.trim()) return;
+        if (notes.some(n => n.note.trim().toLowerCase() === note.trim().toLowerCase())) {
+            alert("Duplicate note not allowed!");
+            return;
+        }
+
         const time = new Date();
         const notetime = time.toLocaleString();
         setNotes([{
@@ -61,7 +66,7 @@ const NoteApp = () => {
     return (
         <>
             <div className='app-container  flex flex-col items-center justify-between h-dvh background'>
-                <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+                <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} setNotes={setNotes} notes={notes} />
 
                 {(notes.length == 0) &&
                     <div >

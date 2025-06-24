@@ -12,10 +12,12 @@ const FilteredContent = ({ notes, searchQuery, handleDelete, editNoteId, setEdit
 
             <div className={`w-full h-auto flex flex-wrap gap-2 justify-center items-center ${notes.length === 0 ? "" : "overflow-y-auto max-h-[93vh]"}`}>
 
-                {filteredItems.length === 0 && searchQuery && (
-                    <div className="flex flex-col items-center text-center text-amber-400 fade-in">
+                {filteredItems.length === 0 && searchQuery && notes.length > 0 && (
+                    <div className="flex flex-col items-center text-center text-amber-300 fade-in">
                         <MdSearchOff className="text-6xl mb-2" />
                         <h3 className='text-2xl font-bold'>No results found for "{searchQuery}"</h3>
+                        <p className="text-center text-lg  mt-2">Try a different keyword.</p>
+
                     </div>
                 )}
 
@@ -30,6 +32,7 @@ const FilteredContent = ({ notes, searchQuery, handleDelete, editNoteId, setEdit
                             editNoteId={editNoteId}
                             setEditNoteId={setEditNoteId}
                             saveHandler={saveHandler}
+                            searchQuery={searchQuery}
                         />))
                 )}
             </div>
